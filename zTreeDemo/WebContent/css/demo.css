@@ -117,10 +117,10 @@ div.zTreeDemoBackground {
 
 ul.ztree {
 	border: 1px solid #617775;
-	background: #f0f6e4;
+	background: #f8f8ff;
 	width: 200px;
 	height: 100%;
-	overflow: auto
+	overflow: auto;
 }
 
 ul.log {
