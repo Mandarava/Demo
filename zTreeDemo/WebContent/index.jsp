@@ -10,9 +10,15 @@
 <script type="text/javascript" src="./js/jquery-1.4.4.min.js"></script>
 <script type="text/javascript" src="./js/jquery.ztree.core-3.5.js"></script>
 
-
 <script type="text/javascript">
 	var setting = {
+		view : {
+			showLine : false,
+			showIcon : false,
+			selectedMulti : false,
+			dblClickExpand : false,
+			addDiyDom : addDiyDom
+		},
 		data : {
 			simpleData : {
 				enable : true
@@ -28,17 +34,23 @@
 		callback : {
 			asyncSuccess : zTreeOnAsyncSuccess,//异步加载成功
 			asyncError : zTreeOnAsyncError, //加载错误 
-			//beforeClick : beforeClick,
-			onClick : zTreeOnClick
+			beforeClick : beforeClick
 		//捕获单击节点之前的事件回调函数 
 		}
 	};
+	function addDiyDom(treeId, treeNode) {
+		var spaceWidth = 5;
+		var switchObj = $("#" + treeNode.tId + "_switch"), icoObj = $("#"
+				+ treeNode.tId + "_ico");
+		switchObj.remove();
+		icoObj.before(switchObj);
 
-	function zTreeOnClick(event, treeId, treeNode) {
-		if (!treeNode.isParent) {
-			alert(treeNode.tId + ", " + treeNode.name);
+		if (treeNode.level > 1) {
+			var spaceStr = "<span style='display: inline-block;width:"
+					+ (spaceWidth * treeNode.level) + "px'></span>";
+			switchObj.before(spaceStr);
 		}
-	};
+	}
 
 	function filter(treeId, parentNode, childNodes) {
 
@@ -49,14 +61,14 @@
 		}
 		return childNodes;
 	}
+
 	function beforeClick(treeId, treeNode) {
-		if (!treeNode.isParent) {
-			alert("请选择父节点");
-			return false;
-		} else {
+		if (treeNode.level == 0) {
+			var zTree = $.fn.zTree.getZTreeObj("ztree");
 			zTree.expandNode(treeNode);
-			return true;
+			return false;
 		}
+		return true;
 	}
 	function zTreeOnAsyncError(event, treeId, treeNode) {
 		alert("异步加载失败!");
@@ -68,10 +80,19 @@
 	var zNodes = [];
 
 	$(document).ready(function() {
-		$.fn.zTree.init($("#tree"), setting, zNodes);
+		var treeObj = $("#ztree");
+		$.fn.zTree.init(treeObj, setting, zNodes);
+
+		treeObj.hover(function() {
+			if (!treeObj.hasClass("showIcon")) {
+				treeObj.addClass("showIcon");
+			}
+		}, function() {
+			treeObj.removeClass("showIcon");
+		});
 	});
 </script>
 <body>
-	<ul id="tree" class="ztree"></ul>
+	<ul id="ztree" class="ztree"></ul>
 </body>
 </html>
