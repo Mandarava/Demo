@@ -33,6 +33,7 @@ public class MenuDao {
 		for (int i = 0; i < menus.size(); i++) {
 			System.out.println(menus.get(i).getName());
 		}
+		conn.close();
 		return menus;
 	}
 
@@ -57,6 +58,7 @@ public class MenuDao {
 		for (int i = 0; i < menus.size(); i++) {
 			System.out.println(menus.get(i).getName());
 		}
+		conn.close();
 		return menus;
 
 	}
