@@ -34,10 +34,16 @@
 		callback : {
 			asyncSuccess : zTreeOnAsyncSuccess,//异步加载成功
 			asyncError : zTreeOnAsyncError, //加载错误 
+			onClick : zTreeOnClick,
 			beforeClick : beforeClick
 		//捕获单击节点之前的事件回调函数 
 		}
 	};
+	function zTreeOnClick(event, treeId, treeNode) {
+		if (!treeNode.isParent) {
+			alert(treeNode.tId + ", " + treeNode.name);
+		}
+	}
 	function addDiyDom(treeId, treeNode) {
 		var spaceWidth = 5;
 		var switchObj = $("#" + treeNode.tId + "_switch"), icoObj = $("#"
