@@ -2,6 +2,7 @@ package kettle;
 
 import org.pentaho.di.core.KettleEnvironment;
 import org.pentaho.di.core.exception.KettleException;
+import org.pentaho.di.core.logging.LogLevel;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 
@@ -26,19 +27,26 @@ public class KettleJavaClassDB {
 			 */
 			TransMeta metadata = new TransMeta(filedb);
 			Trans trans = new Trans(metadata);
-			
-			 /* Setting the Parameter Values 
-             * @PARAM_ID : Parameter Name
-             * @PARAM_NAME : Parameter Name (second parameter)
-             
-            trans.setParameterValue("PARAM_ID", "1");
-            trans.setParameterValue("PARAM_NAME", "name"); */
 
-			// Execute the transformation
+			trans.setLogLevel(LogLevel.ROWLEVEL);
+
+			/*
+			 * Setting the Parameter Values
+			 * 
+			 * @PARAM_ID : Parameter Name
+			 * 
+			 * @PARAM_NAME : Parameter Name (second parameter)
+			 * 
+			 * trans.setParameterValue("PARAM_ID", "1");
+			 * trans.setParameterValue("PARAM_NAME", "name");
+			 */
+
+			/* Execute the transformation */
 			trans.execute(null);
+
 			trans.waitUntilFinished();
 
-			// checking for errors
+			/* checking for errors */
 			if (trans.getErrors() > 0) {
 				System.out.println("Error Executing Transformation");
 			}
