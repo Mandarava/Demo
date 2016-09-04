@@ -18,6 +18,12 @@ import org.pentaho.di.www.Carte;
 import org.pentaho.di.www.SlaveServerConfig;
 import org.pentaho.di.www.WebResult;
 
+/**
+ * not validated
+ * 
+ * @author zt
+ *
+ */
 public class KettleJavaSlaveJob {
 
 	public static void main(String[] args) {
